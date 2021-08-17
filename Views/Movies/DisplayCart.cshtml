@@ -1,0 +1,112 @@
+﻿@model IEnumerable<MovieShop.Models.ViewModels.MovieListVM>
+    @{
+        ViewBag.Title = "DisplayCart";
+    }
+    @if ((int)Session["IsSummary"] == 0)
+    {
+        <h2>Your cart!</h2>
+    }
+    else
+    {
+        <h2>Order Summary!</h2>
+    }
+
+
+   
+
+    @*Place order*@
+    <head>
+        <style>
+            th, td{
+                width:25%;
+                text-align: left;
+            }
+        </style>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                $('#POBtn').click(function () {
+                    $('#CustDiv').show();
+                    $('#POBtn').prop('disabled', true);
+                });
+                $('#ValBtn').click(function () {
+                    var useremail = $('#EmailTxt').val();
+                    if (useremail != '') {
+                        $.ajax({
+                            url: "/Customers/ValidateCustomer",
+                            data: { email: useremail },
+                            contentType: 'application/html;charset=utf-8',
+                            type: 'Get',
+                            dataType: 'html'
+                        }).done(function (result) {
+                            $('#ResDiv').html(result);
+                        });
+                    }
+                    else {
+                        $('#ResDiv').html("<p style='color:red'>Please enter E-mail address before you click validate!</p>")
+                    }
+
+                });
+            });
+        </script>
+    </head>
+    @*===================================================================================*@
+<table class="table">
+    <tr>
+        <th>Movie</th>
+        <th>Release Year</th>
+        <th>No.of.Copies</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="word-break:break-word;">@item.Movie</td>
+            <td>@item.ReleaseYear</td>
+            @if ((int)Session["IsSummary"] == 0)
+            {
+                <td>
+                    <button onclick="location.href='@Url.Action("AddtoCart",new {MovieId=item.MovieId,Add=0,IsCart=1 })'">-</button>
+                    @item.NoofCopies
+                    <button onclick="location.href='@Url.Action("AddtoCart",new {MovieId=item.MovieId,Add=1,IsCart=1 })'">+</button>
+                </td>
+            }
+            else
+            {
+                <td>
+                    @item.NoofCopies
+                </td>
+            }
+
+            <td>@item.Price</td>
+        </tr>
+    }
+    <tr><td colspan="4" style="padding-left:69%"><b>Total Price: </b>@ViewBag.TotalPrice</td></tr>
+    @*knapp till place order*@
+    @if ((int)Session["IsSummary"] == 0)
+     {
+        <tr>
+            <td colspan="4" align="right"><button id="POBtn">Place Order</button></td>
+        </tr>
+     }
+     else
+     {
+        <tr>
+            <td colspan="4" style="padding-left:69%"><button onclick="location.href='@Url.Action("CheckOut","Movies")'">Confirm Order</button></td>
+        </tr>
+     }
+    @*====================================================================================*@
+
+    @*@*Customer validate*@
+</table>
+    <div id="CustDiv" hidden>
+        <p style="color:dodgerblue;font-weight:bold;">Enter your email and click on validate to proceed with the order!</p>
+        <label>Enter E-mail Address</label>
+        <input type="text" id="EmailTxt" />
+        <button id="ValBtn">Validate</button>
+    </div>
+
+    @*============================================================*@
+    <div id="ResDiv"></div>
+
+

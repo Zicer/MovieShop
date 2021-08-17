@@ -1,0 +1,72 @@
+﻿@using MovieShop.Models;
+@model  dynamic
+@{ var result = Model as Tuple<List<Movie>, List<Movie>, List<Movie>>;}
+@{
+    ViewBag.Title = "FrontPage";
+}
+@*Uppgift*@
+@*The most popular movies based on the number of orders made
+
+    o The 5 newest movies (based on release year) Done
+
+    o The 5 oldest movies (based to release year) Dones
+
+    o The 5 cheapest movies (based to price) Done
+
+    o The customer who have made the most expensive order (based of the sum of the order rows in an order) done
+*@
+<h2>HomePage</h2>
+
+Newest By Release Year:
+
+    @foreach (var item in result.Item1)
+     {
+        <div>
+            @Html.DisplayFor(modelItem => item.ReleaseYear) @Html.DisplayFor(modelItem => item.Title)
+        </div>
+     }
+    <div> <br /><br /></div>
+
+Oldest By Release Year:
+
+    @foreach (var item in result.Item2)
+     {
+        <div>
+            @Html.DisplayFor(modelItem => item.ReleaseYear) @Html.DisplayFor(modelItem => item.Title)
+        </div>
+     }
+    <div> <br /><br /></div>
+
+Cheapest Movie By price:
+
+    @foreach (var item in result.Item3)
+     {
+        <div>
+            @Html.DisplayFor(modelItem => item.price) @Html.DisplayFor(modelItem => item.Title)
+        </div>
+     }
+    <div> <br /><br /></div>
+
+Most expensive Order
+
+    <div> <br /></div>
+    @ViewBag.CustName
+
+
+
+
+
+
+
+
+
+
+
+@*@foreach (var item in result.Item4)
+    {
+        <div>-->
+            @Html.DisplayFor(modelItem => item.TotalPrice) @Html.DisplayFor(modelItem => item.Customer.FirstName)
+        </div>*@
+
+
+

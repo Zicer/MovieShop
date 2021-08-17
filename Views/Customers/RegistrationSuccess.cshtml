@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "RegistrationSuccess";
+}
+
+<div class="jumbotron">
+    <h2 style="color:green;">Successfully registered with the email @ViewBag.Email!</h2>
+    Please click on <b>Proceed</b> to continue!
+    <div style="text-align:left">  <button class="btn btn-success" onclick="location.href='@Url.Action("DisplayCart","Movies",new { IsSummary = 1},null)'"><b>Proceed</b></button><br /></div>
+    <div style="text-align:right"><button class="btn btn-primary" onclick="location.href='@Url.Action("DisplayCart","Movies",new { IsSummary = 0 },null)'"><b>Back to Cart</b></button></div>
+</div>

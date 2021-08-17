@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body style="background-image:url('../../img/GoldMarbel.jpg');margin:20px;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Movies List", "MoviesList", "Movies", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "FrontPage", "Movies")</li>
+                    <li>@Html.ActionLink("Search", "SearchMovies", "Movies")</li>
+                    <li>@Html.ActionLink("Paginated List", "PaginateMovies", "Movies")</li>
+                    <li>@Html.ActionLink("Order History", "CheckOrders", "Customers")</li>
+                    
+                    @if (!this.User.IsInRole("Admin"))
+                     {
+                        @*<li>@Html.ActionLink("Manage Roles", "UserRoleList", "Roles")</li>*@
+                     }
+
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+
+                                Admin
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Available Movies", "Index", "Movies")</li>
+                                <li>@Html.ActionLink("Add Movie", "Create", "Movies")</li>
+                                <li>@Html.ActionLink("Manage Roles", "CreateRole", "Account")</li>
+                                <li>@Html.ActionLink("Register Account", "Register", "Account")</li>
+                                <li>@Html.ActionLink("Register Customer", "Create", "Customers")</li>
+                            </ul>
+                        </li>
+
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="background-color: rgba(255, 255, 255, 0.8);">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

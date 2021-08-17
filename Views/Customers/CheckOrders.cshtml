@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MovieShop.Models.ViewModels.OrderHistoryVM>
+@{
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "CheckOrders";
+}
+
+
+<form>
+    <div class="col-sm-12">
+        <label>Email:</label>
+        <input type="text" placeholder="Enter your Email" name="email" />
+        <button>Check Orders</button>
+
+    </div>
+    @if (Model.Count() > 0)
+    {
+        foreach (var orderid in Model.Select(m => m.OrderId).Distinct())
+        {
+            <div class="container-fluid">
+                <div class="col-sm-12 "></div>
+                <div class="col-sm-12 "><br /><br /><b>Order No:</b>@orderid</div>
+                <div class="col-sm-12">
+                    <span class="col-sm-4"> <b>Movie</b></span>
+                    <span class="col-sm-4"> <b>No.of Copies</b></span>
+                    <span class="col-sm-4"> <b>Price</b></span>
+
+                </div>
+            </div>
+            foreach (var item in Model.Where(m => m.OrderId == orderid))
+            {
+                <div class="col-sm-12">
+                    <span class="col-sm-4"> <b>@item.MovieTitle</b></span>
+                    <span class="col-sm-4"> <b>@item.NoofCopies</b></span>
+                    <span class="col-sm-4"> <b>@item.Price</b></span>
+
+                </div>
+            }
+            <div class="col-sm-12">
+                <span class="col-sm-6"><b>Order Date:</b>@Model.Where(m => m.OrderId == orderid).Select(m => m.OrderDate).FirstOrDefault()</span>
+                <span class="col-sm-6"><b>Total Price:</b>@Model.Where(m => m.OrderId == orderid).Select(m => m.TotalPrice).FirstOrDefault()</span>
+            </div>
+
+
+
+
+        }
+    }
+</form>
+
+

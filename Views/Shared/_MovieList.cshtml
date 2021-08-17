@@ -1,0 +1,27 @@
+﻿<div class="panel panel-default col-sm-3" style="border:solid 3px;background-color:cadetblue;margin:15px; margin-left:6%;">
+
+    <div class="panel-heading" style="background-color:cadetblue">
+        <img  style=" height: 210px; text-align:center;" src="@Model.ImageUrl" alt="No Image"/>
+    </div>
+    <button class="btn btn-default" style="margin-top:10px" onclick="location.href = '@Url.Action("AddToCart", "Movies", new { MovieId=Model.Id,Add=1,IsCart=0})'">Add to Cart</button>
+    <div>
+
+        <div class="panel-body" style="width: 200px; height: 300px; color:#0c2461;">
+           
+            <h4>
+                <span class="label label-default sp" >
+                    <a style="color:white; text-decoration:underline" href="#" data-toggle="popover" title="Title" data-content=Model.Title>@Model.Title</a>
+
+
+                </span>
+            </h4>
+            <h4><span class="label label-default">Director:@Model.Director</span></h4>
+
+            <h4><span class="label label-default">Lead Actor:@Model.LeadActor</span></h4>
+
+            <h4><span class="label label-default">Release Year:@Model.ReleaseYear</span></h4>
+
+            <h4><span class="label label-default">Price:@Model.price</span></h4>
+        </div>
+    </div>
+</div>

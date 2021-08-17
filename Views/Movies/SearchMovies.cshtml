@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "SearchMovies";
+}
+
+<head>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $('#SrchBtn').click(function () {
+                $.fn.LoadMovies();
+            });
+
+            $.fn.LoadMovies = function () {
+                var searchtext = $("#SrchTxt").val();
+                $.ajax({
+                    url: "/Movies/FilterMoviesList",
+                    data: { srchtxt: searchtext },
+                    contentType: 'application/html;charset=utf-8',
+                    type: 'Get',
+                    dataType: 'html'
+                }).done(function (result) {
+                    $('#ListDiv').html(result);
+                });
+
+            }
+
+        });
+    </script>
+</head>
+
+<body> 
+    <div style="margin-top:5%">
+        <input type="text" id="SrchTxt" placeholder="Enter Title to search" />
+        <button id="SrchBtn">Search</button>
+    </div>
+    <div id="ListDiv"></div>
+</body>
+
+
+
